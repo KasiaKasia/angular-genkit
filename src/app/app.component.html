@@ -1,0 +1,61 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <app-angular-logo />
+
+      <h1>Hello, {{ title }}</h1>
+      <p>Congratulations! Your app is running. 🎉</p>
+
+
+      <main>
+        <h3>Generate a custom menu item</h3>
+        <label for="theme">Suggest a menu item for a restaurant with this theme: </label>
+        <div class="input-row">
+          <input type="text" id="theme" [(ngModel)]="menuInput" />
+          <button (click)="theme.set(menuInput)">Generate</button>
+        </div>
+        <div class="menu-item">
+          @if (menuResource.isLoading()) {
+            <div>Loading...</div>
+          } @else if (menuResource.value()) {
+
+            <h4>Generated Menu Item:</h4>
+            <pre>{{ menuResource.value().menuItem }}</pre>
+          }
+        </div>
+        <router-outlet />
+      </main>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side">
+      <div class="pill-group">
+        @for (item of [
+        { title: 'Explore the Docs', link: 'https://angular.dev' },
+        { title: 'Create GEMINI API key', link: 'https://aistudio.google.com/app/apikey' },
+        { title: 'Use Genkit in an Angular app', link: 'https://genkit.dev/docs/angular/' },
+        { title: 'angular-examples/genkit-angular-story-generator', link:
+        'https://github.com/devchas/angular-examples/tree/livestream-base/genkit-angular-story-generator' },
+        { title: 'Genkit Dev Tools for method', link: 'http://localhost:4000/flows/menuSuggestionFlow' },
+        ]; track item.title) {
+        <a class="pill" [href]="item.link" target="_blank" rel="noopener">
+          <span>{{ item.title }}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
+            <path
+              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+          </svg>
+        </a>
+        }
+      </div>
+    </div>
+  </div>
+</main>
