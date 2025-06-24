@@ -25,7 +25,9 @@
     );
 
     --pill-accent: var(--bright-blue);
-
+    --angle: syntax: "<angle>";
+    initial-value: 90deg;
+    inherits: false;
     font-family:
         "Inter",
         -apple-system,
@@ -68,7 +70,29 @@ p {
     margin: 0;
     color: var(--gray-700);
 }
+.primary-btn {
+    cursor: pointer;
 
+    position: relative;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    width: max-content;
+    color: black;
+    font-size: 1rem;
+    --angle: 90deg;
+    background: white;
+    border: 1px solid var(--gray-400);
+
+    &:hover {
+        background: linear-gradient(
+            var(--angle),
+            var(--orange-red) 0%,
+            var(--vivid-pink) 50%,
+            var(--electric-violet) 100%
+        );
+        opacity: 0.9;
+    }
+}
 main {
     min-height: 100vh;
     padding: 1rem;
@@ -111,70 +135,6 @@ input[type="text"] {
     width: 1px;
     background: var(--red-to-pink-to-purple-vertical-gradient);
     margin-inline: 0.5rem;
-}
-
-.pill-group {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-}
-
-.pill {
-    display: flex;
-    align-items: center;
-    --pill-accent: var(--bright-blue);
-    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
-    color: var(--pill-accent);
-    padding-inline: 0.75rem;
-    padding-block: 0.375rem;
-    border-radius: 2.75rem;
-    border: 0;
-    transition: background 0.3s ease;
-    font-family: var(--inter-font);
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.4rem;
-    letter-spacing: -0.00875rem;
-    text-decoration: none;
-}
-
-.pill:hover {
-    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
-}
-
-.pill-group .pill:nth-child(6n + 1) {
-    --pill-accent: var(--bright-blue);
-}
-.pill-group .pill:nth-child(6n + 2) {
-    --pill-accent: var(--french-violet);
-}
-.pill-group .pill:nth-child(6n + 3),
-.pill-group .pill:nth-child(6n + 4),
-.pill-group .pill:nth-child(6n + 5) {
-    --pill-accent: var(--hot-red);
-}
-
-.pill-group svg {
-    margin-inline-start: 0.25rem;
-}
-
-.social-links {
-    display: flex;
-    align-items: center;
-    gap: 0.73rem;
-    margin-top: 1.5rem;
-}
-
-.social-links path {
-    transition: fill 0.3s ease;
-    fill: var(--gray-400);
-}
-
-.social-links a:hover svg path {
-    fill: var(--gray-900);
 }
 
 @media screen and (max-width: 650px) {
