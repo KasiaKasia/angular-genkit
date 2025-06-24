@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { runFlow } from 'genkit/beta/client';
 import { AngularLogoComponent } from './components/angular-logo/angular-logo.component';
 import { LinkComponent } from './components/link/link.component';
+import { GEMINI_API_KEY } from './settings/settings';
 
 @Component({
   selector: 'app-root',
@@ -13,19 +14,21 @@ import { LinkComponent } from './components/link/link.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-readonly routerArray=  [
-        { title: 'Explore the Docs', link: 'https://angular.dev' },
-        { title: 'Create GEMINI API key', link: 'https://aistudio.google.com/app/apikey' },
-        { title: 'Use Genkit in an Angular app', link: 'https://genkit.dev/docs/angular/' },
-        { title: 'angular-examples/genkit-angular-story-generator', link:
-        'https://github.com/devchas/angular-examples/tree/livestream-base/genkit-angular-story-generator' },
-        { title: 'Genkit Dev Tools for method', link: 'http://localhost:4000/flows/menuSuggestionFlow' },
-        ]
+  readonly routerArray = [
+    { title: 'Explore the Docs', link: 'https://angular.dev' },
+    { title: 'Create GEMINI API key', link: 'https://aistudio.google.com/app/apikey' },
+    { title: 'Use Genkit in an Angular app', link: 'https://genkit.dev/docs/angular/' },
+    {
+      title: 'angular-examples/genkit-angular-story-generator', link:
+        'https://github.com/devchas/angular-examples/tree/livestream-base/genkit-angular-story-generator'
+    },
+    { title: 'Genkit Dev Tools for method', link: 'http://localhost:4000/flows/menuSuggestionFlow' },
+  ]
 
   title = 'angular-genkit';
   menuInput = '';
   theme = signal('');
-  HUGGING_FACE_TOKEN =   'AIzaSyA4Xw_VubE4U3B-YYoQ9fqAFBUq3SoUNSs';
+  HUGGING_FACE_TOKEN =  GEMINI_API_KEY ;
   menuResource = resource({
     request: () => this.theme(),
     loader: ({ request }) => runFlow({
@@ -37,4 +40,3 @@ readonly routerArray=  [
     }),
   });
 }
- 

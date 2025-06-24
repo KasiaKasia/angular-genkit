@@ -1,8 +1,9 @@
 import { googleAI } from '@genkit-ai/googleai';
 import { genkit, z } from 'genkit';
+import { GEMINI_API_KEY } from '../app/settings/settings';
 
 const ai = genkit({
-  plugins: [googleAI({ apiKey: 'AIzaSyA4Xw_VubE4U3B-YYoQ9fqAFBUq3SoUNSs' })],
+  plugins: [googleAI({ apiKey: `${GEMINI_API_KEY}` })],
 
 });
 
