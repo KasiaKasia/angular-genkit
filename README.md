@@ -20,14 +20,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [ ] `npm run build`
 - [ ] `npm run serve:ssr:angular-genkit`
 
-3. [Generate an API](https://aistudio.google.com/app/apikey){:target="_blank" rel="noopener noreferrer"}  key for the Gemini API using Google AI Studio.
+3. [Generate an API]:(https://aistudio.google.com/app/apikey){:target="_blank"}  key for the Gemini API using Google AI Studio.
 
 4. Set the GEMINI_API_KEY environment variable to your key:
 
 - [ ] `export GEMINI_API_KEY=<your API key>`
 
-
 5. Next, open a web browser and navigate to the following address: http://localhost:4200/
+
 
 ## Running Genkit developer tools
 
