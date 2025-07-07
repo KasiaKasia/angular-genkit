@@ -4,7 +4,6 @@ import { GEMINI_API_KEY } from '../app/settings/settings';
 
 const ai = genkit({
   plugins: [googleAI({ apiKey: `${GEMINI_API_KEY}` })],
-
 });
 
 export const menuSuggestionFlow = ai.defineFlow(

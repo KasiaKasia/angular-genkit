@@ -5,27 +5,30 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import { expressHandler } from '@genkit-ai/express';
-import { menuSuggestionFlow } from './src/genkit/menuSuggestionFlow';
+import {  menuSuggestionFlow } from './src/genkit/menuSuggestionFlow';
 import cors from 'cors';
+import { studyPlanGeneratorFlow } from './src/genkit/workoutPlan';
 
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
 
-    server.use((req, res, next) => {
+  server.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
   });
-  server.use(cors({ origin: 'http://localhost:4200', credentials: true }));
+  server.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
   server.options('/api/menuSuggestionFlow', (req, res) => {
-  res.sendStatus(204);
-});
-
+    res.sendStatus(204);
+  });
+  server.options('/api/studyPlanGeneratorFlow', (req, res) => {
+    res.sendStatus(204);
+  });
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
@@ -34,7 +37,8 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
-  server.use(express.json());
+  server.use(express.json({ limit: '150mb' }));
+
 
 
 
@@ -45,8 +49,8 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
   server.post('/api/menuSuggestionFlow', expressHandler(menuSuggestionFlow));
+  server.post('/api/studyPlanGeneratorFlow', expressHandler(studyPlanGeneratorFlow));
 
-  // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
@@ -66,7 +70,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4200;
+  const port = process.env['PORT'] || 3000;
 
   // Start up the Node server
   const server = app();

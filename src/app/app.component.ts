@@ -6,6 +6,18 @@ import { AngularLogoComponent } from './components/angular-logo/angular-logo.com
 import { LinkComponent } from './components/link/link.component';
 import { GEMINI_API_KEY } from './settings/settings';
 
+export interface StudyPlanInput {
+  subject: string;
+  level: string;
+  timePerDay?: string;
+  durationWeeks?: number;
+}
+
+export const studyPlan: StudyPlanInput = {
+  subject: 'history',
+  level: 'beginner'
+};
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,15 +40,37 @@ export class AppComponent {
   title = 'angular-genkit';
   menuInput = '';
   theme = signal('');
-  HUGGING_FACE_TOKEN =  GEMINI_API_KEY ;
+  studyPlanInput: StudyPlanInput = studyPlan;
+  GEMINI_API_KEY = GEMINI_API_KEY;
+  studyPlanInputUpdate = signal<StudyPlanInput>(studyPlan);
+  imageSrc: string | null = null;
+
+  studyPlanInputResource = resource({
+    request: () => this.studyPlanInputUpdate(),
+    loader: ({ request }) => runFlow({
+      url: 'http://localhost:3000/api/studyPlanGeneratorFlow',
+      headers: {
+        Authorization: `Bearer ${this.GEMINI_API_KEY}`
+      },
+      input: request
+    }),
+  });
+
   menuResource = resource({
     request: () => this.theme(),
     loader: ({ request }) => runFlow({
-      url: 'http://localhost:4200/api/menuSuggestionFlow',
+      url: 'http://localhost:3000/api/menuSuggestionFlow',
       headers: {
-        Authorization: `Bearer ${this.HUGGING_FACE_TOKEN}`
+        Authorization: `Bearer ${this.GEMINI_API_KEY}`
       },
       input: { theme: request }
     }),
   });
+
+  onSubmit() {
+    this.studyPlanInputUpdate.set(this.studyPlanInput);
+    this.studyPlanInputResource.reload();
+  }
 }
+
+
