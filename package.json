@@ -28,6 +28,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "genkit": "^1.13.0",
+    "genkitx-anthropic": "^0.23.1",
+    "genkitx-openai": "^0.23.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"

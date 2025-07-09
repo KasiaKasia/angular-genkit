@@ -20,56 +20,9 @@
           <pre>{{ menuResource.value().menuItem }}</pre>
           }
         </div>
+        
         <hr>
-        <form id="study-plan-form">
-          <label>
-            Przedmiot (np. matematyka, historia, programowanie):
-            <input type="text" name="subject" required [(ngModel)]="studyPlanInput.subject" />
-          </label>
-          <br />
-
-          <label>
-            Poziom umiejętności (np. początkujący, średniozaawansowany, zaawansowany):
-            <input type="text" name="level" required [(ngModel)]="studyPlanInput.level" />
-          </label>
-          <br />
-
-          <label>
-            Czas na dzień (opcjonalnie, np. 1 godzina, 2 godziny):
-            <input type="text" name="timePerDay" [(ngModel)]="studyPlanInput.timePerDay" />
-          </label>
-          <br />
-
-          <label>
-            Duration in Weeks (optional):
-            <input type="number" name="durationWeeks" min="1" [(ngModel)]="studyPlanInput.durationWeeks" />
-          </label>
-          <br />
-          <button (click)="onSubmit()">Generuj plan nauki</button>
-
-        </form>
-        <div class="menu-item">
-          @if (studyPlanInputResource.isLoading()) {
-          <div>Ładowanie...</div>
-          } @else if (studyPlanInputResource.value()) {
-
-          <h4>Wygenerowany plan:</h4>
-          <strong> {{ studyPlanInputResource.value().title }}</strong>
-          <ul>
-            @for ( session of studyPlanInputResource.value().dailySessions; track session.day) {
-            <li>
-              {{ session.day }}
-              <strong> Temat: </strong> {{ session.topic }}
-              <strong> Zadanie: </strong> {{ session.tasks }}
-              <strong> Materiały: </strong> {{ session.materials }}
-            </li>
-            }
-          </ul>
-          <strong>Opis:</strong> {{ studyPlanInputResource.value().description }}
-
-          <p> {{ studyPlanInputResource.value().durationWeeks }} </p>
-          }
-        </div>
+        <app-form />
         <router-outlet />
       </main>
     </div>

@@ -5,6 +5,7 @@ import { runFlow } from 'genkit/beta/client';
 import { AngularLogoComponent } from './components/angular-logo/angular-logo.component';
 import { LinkComponent } from './components/link/link.component';
 import { GEMINI_API_KEY } from './settings/settings';
+import { FormComponent } from './common/form/form.component';
 
 export interface StudyPlanInput {
   subject: string;
@@ -14,14 +15,14 @@ export interface StudyPlanInput {
 }
 
 export const studyPlan: StudyPlanInput = {
-  subject: 'history',
-  level: 'beginner'
+  subject: 'matematyka',
+  level: 'średniozaawansowany'
 };
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, AngularLogoComponent, LinkComponent],
+  imports: [RouterOutlet, FormsModule, AngularLogoComponent, LinkComponent, FormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -40,21 +41,8 @@ export class AppComponent {
   title = 'angular-genkit';
   menuInput = '';
   theme = signal('');
-  studyPlanInput: StudyPlanInput = studyPlan;
   GEMINI_API_KEY = GEMINI_API_KEY;
-  studyPlanInputUpdate = signal<StudyPlanInput>(studyPlan);
   imageSrc: string | null = null;
-
-  studyPlanInputResource = resource({
-    request: () => this.studyPlanInputUpdate(),
-    loader: ({ request }) => runFlow({
-      url: 'http://localhost:3000/api/studyPlanGeneratorFlow',
-      headers: {
-        Authorization: `Bearer ${this.GEMINI_API_KEY}`
-      },
-      input: request
-    }),
-  });
 
   menuResource = resource({
     request: () => this.theme(),
@@ -67,10 +55,6 @@ export class AppComponent {
     }),
   });
 
-  onSubmit() {
-    this.studyPlanInputUpdate.set(this.studyPlanInput);
-    this.studyPlanInputResource.reload();
-  }
 }
 
 
