@@ -4,25 +4,11 @@
       <app-angular-logo />
       <h1>Hello, {{ title }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
-      <main>
-        <h3>Generate a custom menu item</h3>
-        <label for="theme">Suggest a menu item for a restaurant with this theme: </label>
-        <div class="input-row">
-          <input type="text" id="theme" [(ngModel)]="menuInput" />
-          <button class="primary-btn" (click)="theme.set(menuInput)">Generate</button>
-        </div>
-        <div class="menu-item">
-          @if (menuResource.isLoading()) {
-          <div>Loading...</div>
-          } @else if (menuResource.value()) {
-
-          <h4>Generated Menu Item:</h4>
-          <pre>{{ menuResource.value().menuItem }}</pre>
-          }
-        </div>
-        
+      <main> 
+        <app-generate-plan />
         <hr>
-        <app-form />
+        <app-detecting-objects-in-a-photo />
+        <hr> 
         <router-outlet />
       </main>
     </div>

@@ -1,0 +1,15 @@
+<h4>Wykrywanie obiektów na zdjęciu</h4>
+<input type="file" (change)="onFileSelected($event)">
+
+@if (imageSrc) {
+<img #imageRef [src]="imageSrc" alt="Preview" crossorigin="anonymous">
+
+<canvas #canvasRef></canvas>
+}
+<ol>
+    @for (item of predictions; track item.class) {
+    <li>
+        {{ item.class }} ({{(item.score*100).toFixed(0) }}%)
+    </li>
+    }
+</ol>

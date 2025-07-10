@@ -1,17 +1,28 @@
 import { Component, resource, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { studyPlan, StudyPlanInput } from '../../app.component';
 import { runFlow } from 'genkit/beta/client';
 import { GEMINI_API_KEY } from '../../settings/settings';
 
+export interface StudyPlanInput {
+  subject: string;
+  level: string;
+  timePerDay?: string;
+  durationWeeks?: number;
+}
+
+export const studyPlan: StudyPlanInput = {
+  subject: 'matematyka',
+  level: 'średniozaawansowany'
+};
+
 @Component({
-  selector: 'app-form',
+  selector: 'app-generate-plan',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './form.component.html',
-  styleUrl: './form.component.scss'
+  templateUrl: './generate-plan.component.html',
+  styleUrl: './generate-plan.component.scss'
 })
-export class FormComponent {
+export class GeneratePlanComponent {
   GEMINI_API_KEY = GEMINI_API_KEY;
   studyPlanInput: StudyPlanInput = studyPlan;
   studyPlanInputUpdate = signal<StudyPlanInput>(studyPlan);
