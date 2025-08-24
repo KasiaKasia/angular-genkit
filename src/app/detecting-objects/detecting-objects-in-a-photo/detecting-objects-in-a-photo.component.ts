@@ -37,11 +37,9 @@ export class DetectingObjectsInAPhotoComponent {
     const canvas = this.canvasRef.nativeElement;
     const context = canvas.getContext('2d')!;
 
-    // Ustaw rozmiar canvasa
     canvas.width = img.width;
     canvas.height = img.height;
 
-    // Załaduj model
     const model = await cocoSsd.load();
     this.predictions = await model.detect(img);
 
@@ -49,13 +47,11 @@ export class DetectingObjectsInAPhotoComponent {
     this.predictions.forEach(pred => {
       context.strokeStyle = 'red';
       context.lineWidth = 2;
-      context.strokeRect(...pred.bbox); // x, y, width, height
+      context.strokeRect(...pred.bbox);
 
       context.font = '16px Arial';
       context.fillStyle = 'red';
       context.fillText(`${pred.class} (${Math.round(pred.score * 100)}%)`, pred.bbox[0], pred.bbox[1] - 5);
     });
-
-    console.log('Wykryto obiekty:', this.predictions);
   }
 }

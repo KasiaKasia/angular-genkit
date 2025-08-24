@@ -1,7 +1,13 @@
 <form id="study-plan-form">
     <label>
-        Przedmiot (np. matematyka, historia, programowanie):
+        Przedmiot (np. matematyka, historia, programowanie, zastosowanie inormatyki, systemy baz danych, ):
         <input type="text" name="subject" required [(ngModel)]="studyPlanInput.subject" />
+    </label>
+    <br />
+
+  <label>
+        Jakie języki programowania ma obejmować plan nauki? (np. JavaScript, Python, Java, C#, Ruby, Go, PHP, Swift, Kotlin, TypeScript, C++, Rust):
+        <input type="text" name="level" required [(ngModel)]="studyPlanInput.programmingLanguages" />
     </label>
     <br />
 
@@ -18,8 +24,27 @@
     <br />
 
     <label>
+        Ilość lekcji w tygodniu (opcjonalnie):
+        <input type="number" name="numberOfLessonsPerWeek" min="1"
+            [(ngModel)]="studyPlanInput.numberOfLessonsPerWeek" />
+    </label>
+    <br />
+    <label>
         Czas trwania w tygodniach (opcjonalnie):
         <input type="number" name="durationWeeks" min="1" [(ngModel)]="studyPlanInput.durationWeeks" />
+    </label>
+    <br />
+
+    <label>
+        Liczba semestrów (opcjonalnie):
+        <input type="number" name="numberOfSemesters" min="1" [(ngModel)]="studyPlanInput.numberOfSemesters" />
+    </label>
+    <br />
+
+    <label>
+        Etap kształcenia (opcjonalnie, np. szkoła podstawowa, technik programista, technik informatyk, technik grafiki i
+        poligrafii cyfrowej, liceum, studia):
+        <input type="text" name="educationalStage" min="1" [(ngModel)]="studyPlanInput.educationalStage" />
     </label>
     <br />
     <button (click)="onSubmit()">Generuj plan nauki</button>
@@ -27,24 +52,26 @@
 </form>
 
 <div class="menu-item">
-    @if (studyPlanInputResource.isLoading()) {
+    @if (studyPlanInputResource!.isLoading()) {
     <div>Ładowanie...</div>
-    } @else if (studyPlanInputResource.value()) {
+    } @else if (studyPlanInputResource!.value()) {
 
     <h4>Wygenerowany plan:</h4>
-    <strong> {{ studyPlanInputResource.value().title }}</strong>
+    <strong> {{ studyPlanInputResource!.value().title }}</strong>
     <ul>
-        @for ( session of studyPlanInputResource.value().dailySessions; track session.day) {
+        @for ( session of studyPlanInputResource!.value().dailySessions; track session.day) {
         <li>
-            {{ session.day }}
-            <strong> Temat: </strong> {{ session.topic }}
-            <strong> Zadanie: </strong> {{ session.tasks }}
-            <strong> Materiały: </strong> {{ session.materials }}
-        </li>
+            <p>{{ session.day }}</p>
+            <p><strong> Temat: </strong> {{ session.topic }}</p>
+            <p><strong> Zadanie: </strong> {{ session.tasks }}</p>
+            <p><strong> Materiały: </strong> {{ session.materials }}</p>
+            <p><strong> Szczegóły, pojęcia do poznania: </strong> {{ session.details }} minut</p>
+            <p><strong> przykładowe ćwiczenia: </strong> {{ session.examples }}</p>
+         </li>
         }
     </ul>
-    <strong>Opis:</strong> {{ studyPlanInputResource.value().description }}
+    <strong>Opis:</strong> {{ studyPlanInputResource!.value().description }}
 
-    <p> {{ studyPlanInputResource.value().durationWeeks }} </p>
+    <p> {{ studyPlanInputResource!.value().durationWeeks }} </p>
     }
 </div>

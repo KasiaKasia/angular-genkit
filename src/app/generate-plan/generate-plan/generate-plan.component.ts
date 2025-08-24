@@ -1,4 +1,4 @@
-import { Component, resource, signal } from '@angular/core';
+import { Component, resource, ResourceRef, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { runFlow } from 'genkit/beta/client';
 import { GEMINI_API_KEY } from '../../settings/settings';
@@ -8,6 +8,10 @@ export interface StudyPlanInput {
   level: string;
   timePerDay?: string;
   durationWeeks?: number;
+  numberOfLessonsPerWeek?: number;
+  numberOfSemesters?: number;
+  educationalStage?: string;
+  programmingLanguages?: string;
 }
 
 export const studyPlan: StudyPlanInput = {

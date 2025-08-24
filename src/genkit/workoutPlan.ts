@@ -11,6 +11,10 @@ const StudyPlanInputSchema = z.object({
   level: z.string(),
   timePerDay: z.string().optional(),
   durationWeeks: z.number().optional(),
+  numberOfLessonsPerWeek: z.number().optional(),
+  programmingLanguages: z.string().optional(),
+  numberOfSemesters: z.number().optional(),
+  educationalStage: z.string().optional(),
 });
 
 const StudyPlanSchema = z.object({
@@ -18,10 +22,12 @@ const StudyPlanSchema = z.object({
   description: z.string(),
   dailySessions: z.array(
     z.object({
-      day: z.string(),
-      topic: z.string(),
-      materials: z.array(z.string()),
-      tasks: z.array(z.string()),
+      day: z.string(),               // np. "Dzień 1"
+      topic: z.string(),             // główny temat zajęć
+      details: z.array(z.string()).optional(),  // szczegóły, pojęcia do poznania
+      materials: z.array(z.string()).optional(),// lista materiałów do wykorzystania
+      tasks: z.array(z.string()).optional(),    // zadania do wykonania
+      examples: z.array(z.string()).optional(), // przykładowe ćwiczenia / case study
     })
   ),
   tips: z.array(z.string()).optional(),
@@ -33,11 +39,14 @@ export const studyPlanGeneratorFlow = ai.defineFlow(
     outputSchema: StudyPlanSchema,
   },
   async (input) => {
-    const prompt = `Utwórz spersonalizowany plan nauki z następującymi wymaganiami: Temat: ${input.subject} 
+    const prompt = `Utwórz spersonalizowany plan nauki na przedmiot: ${input.subject} 
      Poziom zaawansowania: ${input.level}
-     Dzienny czas nauki: ${input.timePerDay || 'brak preferencji'}
-     Długość planu (tygodnie): ${input.durationWeeks || 'dowolna'}`;
-
+     Czas nauki: ${input.timePerDay || 'brak preferencji'}
+     Długość planu (tygodnie): ${input.durationWeeks || 'dowolna'}
+     Ilość lekcji w tygodniu: ${input.numberOfLessonsPerWeek || 'dowolna'}
+     Ilość semestrów: ${input.numberOfSemesters || 'dowolna'}
+     Lekcje mają obejmować języki programowania : ${input.programmingLanguages || 'dowolna'}
+     Etap kształcenia: ${input.educationalStage || 'dowolna'}`;
     const { stream, response } = ai.generateStream({
       model: googleAI.model('gemini-2.5-flash'),
       prompt: prompt,
